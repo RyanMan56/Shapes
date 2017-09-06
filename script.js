@@ -10,7 +10,7 @@ setInterval(draw, 1/60);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBackground();
+  // drawBackground();
 
   ctx.fillStyle = "#A3C4BC";
   drawTriangle(new Vector2(100, 100), new Vector2(200, 100), new Vector2(150, 200));
