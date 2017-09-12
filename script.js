@@ -2,42 +2,60 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 var toRads = Math.PI / 180;
+var currentSplits = 10000;
 
 window.addEventListener('resize', resizeCanvas, false);
 resizeCanvas();
 
-setInterval(draw, 1/60);
+draw();
+// setInterval(draw, 1/60);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // drawBackground();
-
   ctx.fillStyle = "#A3C4BC";
-  drawTriangle(new Vector2(100, 100), new Vector2(200, 100), new Vector2(150, 200));
-  // ctx.fillStyle = "#F2DDA4";
-  drawTriangle(new Vector2(150, 50), new Vector2(200, 150), new Vector2(100, 150));
+  var startTime = Date.now();
+  filledCircle();
+  console.log("Circle: " + (Date.now() - startTime) + " ms");
 
+  startTime = Date.now();
+  pythagoreanCircle();
+  console.log("Triangles: " + (Date.now() - startTime) + " ms");
+}
+
+function filledCircle() {
   var origin = new Vector2(canvas.width / 2, canvas.height / 2);
-  var splits = 48;
-  var scaler = 300;
+  var splits = currentSplits;
+  var scaler = 400;
   var degreesPerSplit = 360 / splits;
+
+  ctx.beginPath();
   for (var d = 0; d < splits; d++) {
     var deg = d * degreesPerSplit;
-    var deg2 = (d + 1) * degreesPerSplit;
+    ctx.lineTo(origin.x + Math.sin(deg * toRads) * scaler, origin.y + Math.cos(deg * toRads) * scaler);
+  }
+  ctx.fill();
+  ctx.closePath();
+}
 
-    // console.log(deg, deg2);
+function pythagoreanCircle() {
+  var origin = new Vector2(canvas.width / 2, canvas.height / 2);
+  var splits = currentSplits;
+  var scaler = 400;
+  var degreesPerSplit = 360 / splits;
+  for (var d = 0; d < splits; d++) {
+    var deg = Math.ceil(d * degreesPerSplit);
+    var deg2 = Math.ceil((d + 1) * degreesPerSplit);
+
     drawTriangle(
       origin,
       new Vector2(origin.x + Math.sin(deg * toRads) * scaler, origin.y + Math.cos(deg * toRads) * scaler),
       new Vector2(origin.x + Math.sin(deg2 * toRads) * scaler, origin.y + Math.cos(deg2 * toRads) * scaler)
     );
   }
-
 }
 
 function drawBackground() {
   ctx.fillStyle = "#413C58";
-  // ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
