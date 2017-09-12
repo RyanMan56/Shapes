@@ -2,6 +2,8 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 var toRads = Math.PI / 180;
+var lastFrameTime = Date.now();
+var delta = Date.now() - lastFrameTime;
 var currentSplits = 1;
 
 window.addEventListener('resize', resizeCanvas, false);
@@ -13,8 +15,12 @@ setInterval(draw, 1/60);
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#A3C4BC";
+
+  delta = Date.now() - lastFrameTime;
+  lastFrameTime = Date.now();
+
   filledCircle();
-  currentSplits += 0.01;
+  currentSplits += 0.001 * delta;
 }
 
 function filledCircle() {
