@@ -2,24 +2,19 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 var toRads = Math.PI / 180;
-var currentSplits = 10000;
+var currentSplits = 1;
 
 window.addEventListener('resize', resizeCanvas, false);
 resizeCanvas();
 
 draw();
-// setInterval(draw, 1/60);
+setInterval(draw, 1/60);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#A3C4BC";
-  var startTime = Date.now();
   filledCircle();
-  console.log("Circle: " + (Date.now() - startTime) + " ms");
-
-  startTime = Date.now();
-  pythagoreanCircle();
-  console.log("Triangles: " + (Date.now() - startTime) + " ms");
+  currentSplits += 0.01;
 }
 
 function filledCircle() {
