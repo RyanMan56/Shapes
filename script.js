@@ -5,6 +5,7 @@ var toRads = Math.PI / 180;
 var lastFrameTime = Date.now();
 var delta = Date.now() - lastFrameTime;
 var currentSplits = 1;
+var globalScale;
 
 window.addEventListener('resize', resizeCanvas, false);
 resizeCanvas();
@@ -26,7 +27,7 @@ function draw() {
 function filledCircle() {
   var origin = new Vector2(canvas.width / 2, canvas.height / 2);
   var splits = currentSplits;
-  var scaler = 400;
+  var scaler = 400 * globalScale;
   var degreesPerSplit = 360 / splits;
 
   ctx.beginPath();
@@ -77,4 +78,5 @@ function drawTriangle(a, b, c) {
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  globalScale = canvas.width / 1920;
 }
